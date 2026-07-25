@@ -63,6 +63,12 @@ The intended build uses an ESP32, pH/TDS/turbidity probes, a TCS3200 colour sens
 
 The circuit image is a design reference. Before connecting a physical valve, the build needs electrical isolation, a protected driver, flyback suppression, fusing, an emergency stop, tank-level interlocks, and a qualified safety review.
 
+### Real Wokwi simulation
+
+The executable ESP32 simulation is in [`simulation/wokwi/`](simulation/wokwi/). It uses Wokwi-supported parts: an ESP32 DevKit V1, four 3.3 V-powered potentiometers as labelled probe-output substitutes, an I2C LCD1602, override and flow buttons, two relay modules, three resistor-protected status LEDs, an active buzzer, and relay-isolated LED actuator loads. Run it with PlatformIO and `wokwi-cli`; the reproducible scenarios and genuine serial/screenshot evidence are in [`docs/wokwi-verification/`](docs/wokwi-verification/).
+
+Potentiometers simulate probe outputs; they are not physical sensors. Real sensor calibration, actuator hardware validation, isolation, and regulatory review remain future work. The existing `docs/circuit-diagram.png` is a design reference and must not be treated as Wokwi execution evidence.
+
 ## Run locally
 
 ```bash
@@ -92,17 +98,6 @@ Browser state and event history are stored in `localStorage`.
 | `sample-data/` | Normal, violation, and sensor-fault runs |
 | `docs/` | Hardware, calibration, evidence, costs, and demo notes |
 | `.github/workflows/` | Tests and GitHub Pages deployment |
-
-## Hack Fusion 2026
-
-- **Final:** 7 August 2026, 9:00 AM to 7:00 PM
-- **Venue:** VET Institute of Arts and Science, Thindal, Erode
-- **Organisers:** VETIAS and StartupTN
-- **Team format:** four students and one professional mentor
-- **Concept deadline:** 25 July 2026
-- **Shortlist:** 1 August 2026
-- **Prizes:** ₹10,000, ₹7,500, and ₹5,000
-- **Registration:** [form.startuptn.in/HACF](https://form.startuptn.in/HACF)
 
 ## Team Technoz
 
