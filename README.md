@@ -93,6 +93,8 @@ Use the scenario console to reproduce normal, high TDS, acidic/alkaline pH, high
 
 Prototype defaults: pH 6.5–8.5; TDS warning/violation at 1,500/2,100 mg/L; turbidity warning/violation at 20/50 NTU; configurable colour thresholds at 55/78. A critical single-sensor rule diverts. Two warnings escalate to non-compliant. Missing or implausible critical input is `SENSOR_FAULT`. This is rule-based confidence, not an ML probability. An ML classifier is a future upgrade only after labelled real-world samples exist.
 
+The pH and TDS violation values align with the published CPCB textile-effluent table, but this prototype does not treat one table as universal permission to discharge. Disposal mode, intake-water quality, recipient conditions, TNPCB directions, reuse/ZLD obligations, and field calibration can require different or stricter limits. See [`docs/evidence-and-regulatory-context.md`](docs/evidence-and-regulatory-context.md).
+
 ## Hardware and Wokwi
 
 The target build uses an ESP32, pH/TDS/turbidity probes, TCS3200 RGB sensor, optional flow sensor, 12 V solenoid, optional dosing pump, three status LEDs, buzzer, and bypass switch. Wokwi substitutes potentiometers for analogue sensors; see [`simulation/wokwi/README.md`](simulation/wokwi/README.md).
@@ -101,18 +103,28 @@ The target build uses an ESP32, pH/TDS/turbidity probes, TCS3200 RGB sensor, opt
 
 Push the repository to GitHub with the name `chromaguard-hackfusion-2026`. Enable Pages with **GitHub Actions** as the source. The workflow installs dependencies, typechecks, tests, builds with the configured base path, and deploys `dist/`.
 
+## Pilot path and sustainability
+
+The deck proposes a staged route: calibrate one outflow-line prototype, pilot with two or three member units connected to one CETP, validate the optional holding/dosing buffer, and only then pursue a regulator-backed rollout. Possible future revenue is hardware sale or lease plus calibration/maintenance services. A hosted compliance service is a future business option—not part of this local-only repository.
+
+Deck planning ranges are documented as estimates, not quotes: ₹3,100–₹4,400 for the shared sensing stack, ₹3,500–₹5,300 for detect-and-divert Plan A, and ₹4,600–₹7,500 for Plan B with a treatment buffer. See [`docs/hackathon-brief.md`](docs/hackathon-brief.md) and [`docs/bill-of-materials.md`](docs/bill-of-materials.md).
+
 ## Limitations and roadmap
 
-Current limitations include simulated browser readings, proxy inputs in Wokwi, no plant PLC interlock, no certified sensor calibration, and no persistent server database. Next steps are field sampling, calibration curves, tank-level hardware interlocks, treatment validation, and only then evaluation of a labelled-data ML model.
+Current limitations include simulated browser readings, proxy inputs in Wokwi, localStorage logs that are auditable but not tamper-evident, no proven power-loss diversion hardware, no plant PLC interlock, no certified calibration, and no persistent server database. The next gates are sensor calibration, false-positive analysis, normally-safe valve and tank-level interlock testing, labelled-effluent trials, pilot validation, and only then evaluation of an ML model or wider rollout.
 
 ## Team
 
-**Team ChromaGuard · HackFusion 2026**
+**Team Technoz · Sri Sairam Engineering College · HackFusion 2026**
 
-- **Adithya HMT** — repository maintainer, product direction, dashboard and simulation integration ([`@adithya-hmt`](https://github.com/adithya-hmt)).
-- **ChromaGuard engineering team** — embedded sensing, process controls, calibration, and field validation.
+- **Manieswari M. V.** — Team Leader, EEE
+- **Poojasree P.** — Team Member, EEE
+- **Prathiksha S.** — Team Member, EEE
+- **Adithya S.** — Team Member, CSE
+- **Anantha Balan R.** — Team Member, CSE
+- **R. Sivaprasad** — Faculty Mentor
 
-The public prototype intentionally records roles rather than inventing personal details for collaborators who have not published their profiles. See [`docs/team.md`](docs/team.md) for the demo handoff and ownership map.
+See [`docs/team.md`](docs/team.md) for institutional contact details and ownership areas. The GitHub repository is hosted by [`@adithya-hmt`](https://github.com/adithya-hmt); that account attribution is separate from the team roster supplied in the HackFusion deck.
 
 ## Licence
 

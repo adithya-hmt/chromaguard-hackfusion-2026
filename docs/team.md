@@ -1,14 +1,16 @@
-# Team ChromaGuard
+# Team Technoz
 
 ## HackFusion 2026
 
-ChromaGuard is presented by **Team ChromaGuard** at HackFusion 2026.
+ChromaGuard is presented by **Team Technoz** from Sri Sairam Engineering College at HackFusion 2026.
 
-| Area | Owner / responsibility |
-|---|---|
-| Repository and demo handoff | Adithya HMT (`@adithya-hmt`) |
-| Product and system concept | ChromaGuard team |
-| Embedded sensing and ESP32 integration | ChromaGuard engineering team |
-| Process safety, calibration, and field validation | Requires qualified hardware/process partners before deployment |
+| Member | Role | Department | Institutional contact |
+|---|---|---|---|
+| Manieswari M. V. | Team Leader | EEE | sec25ee009@sairamtap.edu.in |
+| Poojasree P. | Team Member | EEE | sec25ee076@sairamtap.edu.in |
+| Prathiksha S. | Team Member | EEE | sec25ee061@sairamtap.edu.in |
+| Adithya S. | Team Member | CSE | secl25cs08@sairamtap.edu.in |
+| Anantha Balan R. | Team Member | CSE | sec24cs114@sairamtap.edu.in |
+| R. Sivaprasad | Faculty Mentor | Sri Sairam Engineering College | sivaprasad.eee@sairam.edu.in |
 
-The repository names the published maintainer and team roles without fabricating collaborator names or credentials.
+Public project contact: **Manieswari M. V.**, team leader. The personal phone number present in the source deck is intentionally not duplicated in the public README.
