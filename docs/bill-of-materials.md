@@ -18,4 +18,4 @@
 | Plan A | Detect + divert | ₹3,500–₹5,300 |
 | Plan B | Detect + divert + treatment buffer | ₹4,600–₹7,500 |
 
-These figures come from the HackFusion planning deck and are not current supplier quotes. Industrial probes, enclosures, certified power/relay hardware, valves, installation, calibration, and compliance testing can raise deployment cost substantially.
+These are prototype planning figures, not current supplier quotes. Industrial probes, enclosures, certified power/relay hardware, valves, installation, calibration, and compliance testing can raise deployment cost substantially.

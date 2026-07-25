@@ -22,7 +22,7 @@ Laboratory testing and passive dashboards can identify pollution after release o
 
 The differentiator is not another water dashboard. ChromaGuard places the actuator in the decision loop. The prototype also keeps rule reasons visible, logs maintenance bypass, and demonstrates unsafe-capacity handling instead of hiding difficult states.
 
-## Pilot model from the submission deck
+## Pilot model
 
 1. **Prototype and calibrate:** build Plan A on one outflow line, gather labelled samples, tune thresholds, and validate the valve.
 2. **CETP pilot:** deploy at two or three member units connected to one CETP; compare sensors with laboratory measurements and review false decisions.
@@ -31,7 +31,7 @@ The differentiator is not another water dashboard. ChromaGuard places the actuat
 
 ## Sustainability path
 
-The deck proposes hardware sale or lease and recurring calibration, probe-cleaning, and maintenance services. A hosted compliance dashboard may be evaluated later, but the submitted repository deliberately has no authentication, paid API, cloud database, or SaaS claim.
+The proposed model combines hardware sale or lease with recurring calibration, probe-cleaning, and maintenance services. A hosted compliance dashboard may be evaluated later, but the submitted repository deliberately has no authentication, paid API, cloud database, or SaaS claim.
 
 ## Validation gates before field use
 

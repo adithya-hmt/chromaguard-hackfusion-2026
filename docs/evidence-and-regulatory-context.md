@@ -11,11 +11,11 @@ Turbidity and the TCS3200-derived colour-intensity bands are simulation paramete
 
 ## Tiruppur context
 
-The source deck uses historical figures of 700+ dyeing/bleaching units and 18 operating CETPs. A TNPCB policy note records 754 units covered by closure proceedings and 18 operating textile CETPs in the 2011–2014 context. These are useful problem-history figures, not confirmed current market counts.
+The submission context uses historical figures of 700+ dyeing/bleaching units and 18 operating CETPs. A TNPCB policy note records 754 units covered by closure proceedings and 18 operating textile CETPs in the 2011–2014 context. These are useful problem-history figures, not confirmed current market counts.
 
 - TNPCB: [Policy Note 2013–2014](https://tnpcb.gov.in/PDF/About_Us/PolicyNote/PolicyNoteEnglish2013-2014.pdf)
 
-A more recent TNPCB CEPI report states that dyeing and bleaching units in its study area recover 98% of effluent for reuse and that industrial effluent discharge to water bodies is not permitted. It separately reports major untreated domestic sewage discharge. For that reason, this repository does not repeat the deck's approximately 96 MLD figure as current industrial textile discharge.
+A more recent TNPCB CEPI report states that dyeing and bleaching units in its study area recover 98% of effluent for reuse and that industrial effluent discharge to water bodies is not permitted. It separately reports major untreated domestic sewage discharge. For that reason, this repository does not present approximately 96 MLD as current industrial textile discharge.
 
 - TNPCB: [Tiruppur CEPI evaluation and action plan](https://tnpcb.gov.in/PDF/About_Us/projects/CEPI/CEPI_TprRpt4920.pdf)
 - TNPCB: [Continuous Noyyal and Kalingarayan water-quality monitoring](https://tnpcb.gov.in/waterquality.php)

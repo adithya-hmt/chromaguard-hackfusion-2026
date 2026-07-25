@@ -13,4 +13,4 @@ ChromaGuard is presented by **Team Technoz** from Sri Sairam Engineering College
 | Anantha Balan R. | Team Member | CSE | sec24cs114@sairamtap.edu.in |
 | R. Sivaprasad | Faculty Mentor | Sri Sairam Engineering College | sivaprasad.eee@sairam.edu.in |
 
-Public project contact: **Manieswari M. V.**, team leader. The personal phone number present in the source deck is intentionally not duplicated in the public README.
+Public project contact: **Manieswari M. V.**, team leader. Competition eligibility is determined by the registered four-student and one-mentor roster; repository contributor credits do not redefine that official roster. Personal phone numbers are not published here.
