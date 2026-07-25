@@ -2,7 +2,7 @@
 
 ## Event
 
-Hack Fusion 2026 is an innovation hackathon organised by VET Institute of Arts and Science with StartupTN. The grand finale is scheduled for **7 August 2026, 9:00 AM–7:00 PM**, at **VETIAS, Thindal, Erode**.
+VET Institute of Arts and Science and StartupTN organise Hack Fusion 2026. The final is scheduled for **7 August 2026, 9:00 AM to 7:00 PM**, at **VETIAS, Thindal, Erode**.
 
 ChromaGuard enters the **Textile Dyeing Pollution Monitoring & Management** problem track.
 
@@ -24,7 +24,7 @@ ChromaGuard enters the **Textile Dyeing Pollution Monitoring & Management** prob
 - Third prize: ₹5,000
 - Registration: [form.startuptn.in/HACF](https://form.startuptn.in/HACF)
 
-## What ChromaGuard will demonstrate
+## ChromaGuard demo
 
 1. Normal discharge remains on the permitted route.
 2. A critical TDS, pH, turbidity, or colour rule triggers automatic diversion.
@@ -36,4 +36,4 @@ ChromaGuard enters the **Textile Dyeing Pollution Monitoring & Management** prob
 
 ## Submission standard
 
-The repository is the technical evidence behind the concept presentation: working digital twin, deterministic tests, Wokwi firmware, circuit reference, source data, deployment workflow, limitations, and a field-validation plan. It contains no presentation binaries.
+The repository contains the interactive demo, tests, Wokwi firmware, circuit reference, sample data, deployment workflow, limitations, and field-test plan. It contains no presentation files.

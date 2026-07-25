@@ -1,64 +1,67 @@
 # ChromaGuard
 
-## Effluent Compliance System · Hack Fusion 2026
+ESP32 effluent compliance prototype for the **Textile Dyeing Pollution Monitoring & Management** track at Hack Fusion 2026.
 
-**Problem track:** Textile Dyeing Pollution Monitoring & Management
+ChromaGuard reads pH, TDS, turbidity, colour intensity, and flow. A rule-based classifier checks each sample. If a critical limit fails, the state machine switches the simulated valve from normal discharge to a holding tank and records the event.
 
-> We don't just detect pollution. We stop it at the pipe.
+**[Open the interactive demo](https://adithya-hmt.github.io/chromaguard-hackfusion-2026/)**
 
-[Launch interactive demo](https://adithya-hmt.github.io/chromaguard-hackfusion-2026/) · [Judge demo](docs/demo-script.md) · [ESP32/Wokwi setup](simulation/wokwi/README.md) · [Technical brief](docs/hackathon-brief.md)
+The demo runs in a browser. Judges can select fixed test scenarios, change operating modes, control the valve and pump, inspect sensor history, and export the event log. It does not need an account, API key, or backend.
 
-Textile effluent is often verified after it has already left the discharge pipe. ChromaGuard demonstrates a direct response: sense water quality, classify it with visible rules, decide the route, actuate diversion, and record the event. Its **interactive browser demo** lets judges run scenarios, operate controls, watch valve routing, inspect charts, and export events without an account, backend, paid API, or physical sensor kit.
+> Current status: the browser and Wokwi builds use simulated inputs. ChromaGuard has not been field-calibrated or approved for industrial use.
 
-ChromaGuard is an ESP32-oriented prototype for textile dye effluent. It continuously senses pH, TDS, turbidity, colour intensity, and flow; applies a documented rule classifier; decides the outlet route; drives a diversion valve on non-compliance; and records an auditable event log.
+## Demo checklist
 
-> **Prototype notice:** the browser uses simulated sensor data and this project is not a replacement for an effluent treatment plant, regulatory approval, or certified instrumentation. Thresholds are prototype defaults. Final limits require applicable TNPCB/CPCB review, field samples, calibration, and safety validation.
+| Select | Expected result |
+|---|---|
+| Normal compliant discharge | Normal outlet remains open |
+| High TDS violation | Diversion valve opens |
+| Acidic or alkaline pH | Diversion valve opens |
+| High turbidity or colour | Diversion valve opens |
+| Sensor disconnected | System enters `SENSOR_FAULT` and follows the configured safe response |
+| Maintenance bypass | Override remains visible and is written to the event log |
+| Holding tank nearly full | Inlet closes instead of routing more water to the tank |
+| Normal discharge after diversion | Valve returns to normal after two compliant samples |
 
-## Hack Fusion 2026
+Detailed walkthrough: [docs/demo-script.md](docs/demo-script.md)
 
-![Hack Fusion 2026 event poster](docs/hackfusion-2026-poster.png)
-
-- **Grand finale:** 7 August 2026, 9:00 AM–7:00 PM
-- **Venue:** VET Institute of Arts and Science, Thindal, Erode
-- **Organised by:** VETIAS with StartupTN
-- **Team format:** four students and one professional mentor
-- **Concept PPT deadline:** 25 July 2026
-- **Shortlist announcement:** 1 August 2026
-- **Prizes:** ₹10,000 / ₹7,500 / ₹5,000
-- **Registration:** [form.startuptn.in/HACF](https://form.startuptn.in/HACF)
-
-See the concise [event and submission context](docs/hackfusion-2026-event.md).
-
-## The problem
-
-A dashboard that only reports a violation leaves the discharge path open. ChromaGuard makes the control action explicit: in automatic mode, `NON_COMPLIANT` or `SENSOR_FAULT` enters the fail-safe route and commands diversion before the normal outlet. A full holding tank closes the valve and raises a visible fault instead of pretending the tank can accept more flow.
-
-## Hardware concept
-
-The supplied Tinkercad-style circuit reference shows the intended prototype: fused 12 V supply, buck conversion for the ESP32, pH/TDS/turbidity probes, TCS3200 colour sensing, optional flow sensing, I2C LCD, maintenance override, solenoid diversion valve, optional dosing pump, buzzer, and green/yellow/red status outputs.
-
-![ChromaGuard ESP32 prototype circuit](docs/circuit-diagram.png)
-
-The image is a system reference, not a production wiring approval. The Wokwi pin map and current firmware configuration are authoritative for the simulation; validate power domains, isolation, relay drivers, flyback protection, grounding, and emergency shutdown before connecting a live valve.
-
-## Sense → Classify → Decide → Act → Log
+## Control loop
 
 ```mermaid
 flowchart LR
   A[Dyeing unit] --> B[Sensor pod]
-  B --> C[Rule fusion classifier]
+  B --> C[Rule classifier]
   C --> D{Decision}
-  D -->|COMPLIANT| E[Normal discharge]
-  D -->|WARNING| F[Alert + continue monitoring]
-  D -->|NON_COMPLIANT / SENSOR_FAULT| G[Solenoid diversion]
+  D -->|Compliant| E[Normal outlet]
+  D -->|Warning| F[Continue and alert]
+  D -->|Violation or fault| G[Diversion valve]
   G --> H[Holding tank]
   H --> I[Optional dosing pump]
   C --> J[(Local event log)]
 ```
 
-## Interactive demo
+The valve logic lives in `src/simulation/engine.ts`. It applies a minimum diversion hold and requires consecutive compliant samples before reopening the normal route. The same rule thresholds are mirrored in the ESP32 classifier.
 
-The public repository is [adithya-hmt/chromaguard-hackfusion-2026](https://github.com/adithya-hmt/chromaguard-hackfusion-2026). The working interactive demo is available at [adithya-hmt.github.io/chromaguard-hackfusion-2026](https://adithya-hmt.github.io/chromaguard-hackfusion-2026/).
+## Prototype thresholds
+
+| Reading | Warning | Violation |
+|---|---:|---:|
+| pH | — | below 6.5 or above 8.5 |
+| TDS | above 1,500 mg/L | above 2,100 mg/L |
+| Turbidity | above 20 NTU | above 50 NTU |
+| Colour intensity | above 55 | above 78 |
+
+One critical reading causes `NON_COMPLIANT`. Two simultaneous warnings also cause `NON_COMPLIANT`. Missing or implausible input causes `SENSOR_FAULT`.
+
+These are prototype settings. The pH and TDS values are based on the CPCB textile-effluent table, subject to its disposal, reuse, intake-water, and local-board conditions. Turbidity and TCS3200 colour values are simulation settings. See [regulatory context](docs/evidence-and-regulatory-context.md).
+
+## Hardware model
+
+![ChromaGuard ESP32 circuit reference](docs/circuit-diagram.png)
+
+The intended build uses an ESP32, pH/TDS/turbidity probes, a TCS3200 colour sensor, an optional flow sensor, a 12 V solenoid valve, three status LEDs, a buzzer, and an optional dosing pump. Wokwi uses potentiometers in place of water probes.
+
+The circuit image is a design reference. Before connecting a physical valve, the build needs electrical isolation, a protected driver, flyback suppression, fusing, an emergency stop, tank-level interlocks, and a qualified safety review.
 
 ## Run locally
 
@@ -67,76 +70,59 @@ npm install
 npm run dev
 ```
 
-The simulation is offline after the app loads. State and events are stored in the browser's localStorage. Run `npm run typecheck`, `npm test -- --run`, and `npm run build` for the release checks.
+Release checks:
 
-## Demo scenarios
+```bash
+npm run typecheck
+npm test -- --run
+npm run build
+```
 
-Use the scenario console to reproduce normal, high TDS, acidic/alkaline pH, high turbidity, abnormal colour, severe mixed contamination, sensor disconnect, maintenance bypass, and holding-tank-full states. The event log supports search, filtering, CSV export, and confirmed clearing.
+Browser state and event history are stored in `localStorage`.
 
-## Judge-ready demo path
+## Repository
 
-1. Open the [live digital twin](https://adithya-hmt.github.io/chromaguard-hackfusion-2026/) and point out that it works without authentication or a backend.
-2. Run **Normal compliant discharge** and show the green normal outlet route.
-3. Run **High TDS violation** and show the red diversion route, triggered rule, tank level, and audit event.
-4. Run **Sensor disconnected** to demonstrate fail-safe diversion instead of silent bad data.
-5. Enable **Maintenance bypass** and show that the override is visible and logged.
-6. Restore normal readings twice; the state machine releases diversion only after consecutive compliant samples.
-7. Export the event log CSV, then open the Wokwi firmware simulation to show matching serial telemetry.
+| Path | Contents |
+|---|---|
+| `src/simulation/` | Classifier, state machine, scenarios, telemetry |
+| `src/App.tsx` | Interactive dashboard |
+| `tests/` | Deterministic classifier and state tests |
+| `firmware/chromaguard/` | ESP32 sketch and C++ classifier |
+| `simulation/wokwi/` | Wokwi circuit and instructions |
+| `sample-data/` | Normal, violation, and sensor-fault runs |
+| `docs/` | Hardware, calibration, evidence, costs, and demo notes |
+| `.github/workflows/` | Tests and GitHub Pages deployment |
 
-### Why this submission is credible
+## Hack Fusion 2026
 
-- The valve is part of the state machine; this is not a passive monitoring dashboard.
-- Ten deterministic scenarios make every safety path reproducible for judges.
-- Automated tests cover classification, diversion, recovery, bypass logging, sensor faults, and tank capacity.
-- Browser and firmware rules are documented side by side.
-- The repository makes no claim of trained ML, certification, field calibration, or regulatory approval.
+- **Final:** 7 August 2026, 9:00 AM to 7:00 PM
+- **Venue:** VET Institute of Arts and Science, Thindal, Erode
+- **Organisers:** VETIAS and StartupTN
+- **Team format:** four students and one professional mentor
+- **Concept deadline:** 25 July 2026
+- **Shortlist:** 1 August 2026
+- **Prizes:** ₹10,000, ₹7,500, and ₹5,000
+- **Registration:** [form.startuptn.in/HACF](https://form.startuptn.in/HACF)
 
-## Repository map
+![Hack Fusion 2026 poster](docs/hackfusion-2026-poster.png)
 
-- `src/simulation/` — TypeScript classifier, state machine, scenarios, and telemetry helpers.
-- `src/App.tsx` — responsive control-room dashboard.
-- `firmware/chromaguard/` — Arduino-compatible ESP32 sketch and shared rule model.
-- `simulation/wokwi/` — Wokwi diagram and setup notes.
-- `docs/` — architecture, calibration, limits, BOM, testing, and demo script.
-- `.github/workflows/` — test/build and GitHub Pages deployment.
+## Team Technoz
 
-## Classification model
+- Manieswari M. V., Team Leader, EEE
+- Poojasree P., EEE
+- Prathiksha S., EEE
+- Adithya S., CSE
+- Anantha Balan R., CSE
+- R. Sivaprasad, Faculty Mentor
 
-Prototype defaults: pH 6.5–8.5; TDS warning/violation at 1,500/2,100 mg/L; turbidity warning/violation at 20/50 NTU; configurable colour thresholds at 55/78. A critical single-sensor rule diverts. Two warnings escalate to non-compliant. Missing or implausible critical input is `SENSOR_FAULT`. This is rule-based confidence, not an ML probability. An ML classifier is a future upgrade only after labelled real-world samples exist.
+The event registration defines the official four-student competition roster. The list above credits project contributors. Institutional contacts are in [docs/team.md](docs/team.md).
 
-The pH and TDS violation values align with the published CPCB textile-effluent table, but this prototype does not treat one table as universal permission to discharge. Disposal mode, intake-water quality, recipient conditions, TNPCB directions, reuse/ZLD obligations, and field calibration can require different or stricter limits. See [`docs/evidence-and-regulatory-context.md`](docs/evidence-and-regulatory-context.md).
+## Scope
 
-## Hardware and Wokwi
+The repository proves the software workflow and firmware logic. It does not prove sensor accuracy, valve reliability, treatment performance, tamper resistance, regulatory compliance, or a trained ML model. Those require physical hardware, labelled samples, laboratory comparison, and site-specific review.
 
-The target build uses an ESP32, pH/TDS/turbidity probes, TCS3200 RGB sensor, optional flow sensor, 12 V solenoid, optional dosing pump, three status LEDs, buzzer, and bypass switch. Wokwi substitutes potentiometers for analogue sensors; see [`simulation/wokwi/README.md`](simulation/wokwi/README.md).
-
-## GitHub Pages deployment
-
-Push the repository to GitHub with the name `chromaguard-hackfusion-2026`. Enable Pages with **GitHub Actions** as the source. The workflow installs dependencies, typechecks, tests, builds with the configured base path, and deploys `dist/`.
-
-## Pilot path and sustainability
-
-The deck proposes a staged route: calibrate one outflow-line prototype, pilot with two or three member units connected to one CETP, validate the optional holding/dosing buffer, and only then pursue a regulator-backed rollout. Possible future revenue is hardware sale or lease plus calibration/maintenance services. A hosted compliance service is a future business option—not part of this local-only repository.
-
-Prototype planning ranges are documented as estimates, not quotes: ₹3,100–₹4,400 for the shared sensing stack, ₹3,500–₹5,300 for detect-and-divert Plan A, and ₹4,600–₹7,500 for Plan B with a treatment buffer. See [`docs/hackathon-brief.md`](docs/hackathon-brief.md) and [`docs/bill-of-materials.md`](docs/bill-of-materials.md).
-
-## Limitations and roadmap
-
-Current limitations include simulated browser readings, proxy inputs in Wokwi, localStorage logs that are auditable but not tamper-evident, no proven power-loss diversion hardware, no plant PLC interlock, no certified calibration, and no persistent server database. The next gates are sensor calibration, false-positive analysis, normally-safe valve and tank-level interlock testing, labelled-effluent trials, pilot validation, and only then evaluation of an ML model or wider rollout.
-
-## Team
-
-**Team Technoz · Sri Sairam Engineering College · HackFusion 2026**
-
-- **Manieswari M. V.** — Team Leader, EEE
-- **Poojasree P.** — Team Member, EEE
-- **Prathiksha S.** — Team Member, EEE
-- **Adithya S.** — Team Member, CSE
-- **Anantha Balan R.** — Team Member, CSE
-- **R. Sivaprasad** — Faculty Mentor
-
-See [`docs/team.md`](docs/team.md) for institutional contact details. Repository contributor credits are separate from the official four-student registration roster required by the event.
+The pilot plan and cost estimates are documented in [docs/hackathon-brief.md](docs/hackathon-brief.md) and [docs/bill-of-materials.md](docs/bill-of-materials.md).
 
 ## Licence
 
-See [`LICENSE`](LICENSE), [`CONTRIBUTING.md`](CONTRIBUTING.md), and [`SECURITY.md`](SECURITY.md).
+MIT. See [LICENSE](LICENSE).

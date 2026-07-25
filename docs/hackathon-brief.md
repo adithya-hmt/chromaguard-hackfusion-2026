@@ -1,47 +1,51 @@
-# ChromaGuard HackFusion brief
+# Technical brief
 
-## One-line value proposition
+## Problem
 
-ChromaGuard converts water-quality sensing into an immediate, explainable physical diversion decision at the discharge pipe.
+Water tests and monitoring dashboards do not control the discharge pipe. ChromaGuard adds a valve to the monitoring loop. A failed sample changes the route before the simulated flow reaches the normal outlet.
 
-## The gap
+## Implemented
 
-Laboratory testing and passive dashboards can identify pollution after release or wait for a human response. The prototype demonstrates a closed loop instead: **Sense → Classify → Decide → Act → Log**.
+- Browser simulation with ten fixed scenarios
+- Rule checks for pH, TDS, turbidity, colour, and sensor validity
+- State machine for diversion hold, recovery, bypass, and tank capacity
+- Searchable event history, charts, CSV export, and localStorage recovery
+- ESP32 sketch with analogue proxy inputs and JSON serial output
+- Wokwi circuit with LEDs, buzzer, valve output, pump output, and bypass switch
+- Automated tests and GitHub Pages deployment
 
-## What judges can verify now
+## Pilot sequence
 
-- Ten deterministic browser scenarios, including violations, sensor loss, bypass, and a nearly full holding tank.
-- A rule classifier with explicit pH, TDS, turbidity, and colour thresholds.
-- Automatic diversion on non-compliance and the configured sensor-fault response.
-- Minimum diversion hold and consecutive-compliant recovery in a state machine.
-- Searchable local event history, CSV export, trend charts, impact counters, and localStorage restoration.
-- Mirrored Arduino-compatible ESP32 rules, Wokwi proxy inputs, actuator outputs, and JSON serial telemetry.
-- Automated classifier/state tests and GitHub Actions deployment.
+1. Install the sensor pod and valve on one controlled outflow line.
+2. Calibrate each probe against laboratory measurements and record false decisions.
+3. Test two or three member units connected to one CETP.
+4. Add the holding tank and dosing pump only after the diversion system is stable.
+5. Measure treatment results before pursuing a supervised regulatory pilot.
 
-## Why it is different
+## Cost estimate
 
-The differentiator is not another water dashboard. ChromaGuard places the actuator in the decision loop. The prototype also keeps rule reasons visible, logs maintenance bypass, and demonstrates unsafe-capacity handling instead of hiding difficult states.
+| Build | Scope | Estimate |
+|---|---|---:|
+| Sensor stack | Shared sensing hardware | ₹3,100–₹4,400 |
+| Plan A | Sensing and diversion | ₹3,500–₹5,300 |
+| Plan B | Diversion and treatment buffer | ₹4,600–₹7,500 |
 
-## Pilot model
+These figures are early estimates, not supplier quotes. Industrial probes, enclosures, certified switching hardware, installation, and calibration will cost more.
 
-1. **Prototype and calibrate:** build Plan A on one outflow line, gather labelled samples, tune thresholds, and validate the valve.
-2. **CETP pilot:** deploy at two or three member units connected to one CETP; compare sensors with laboratory measurements and review false decisions.
-3. **Add pre-treatment:** introduce the holding tank and dosing buffer and measure contaminant reduction before CETP hand-off.
-4. **Regulatory pathway:** pursue a supervised TNPCB pilot only after safety and field evidence are complete.
+## Possible operating model
 
-## Sustainability path
+The hardware could be sold or leased. Calibration, probe cleaning, and valve maintenance would be recurring services. This repository does not implement billing, authentication, a cloud database, or a hosted compliance service.
 
-The proposed model combines hardware sale or lease with recurring calibration, probe-cleaning, and maintenance services. A hosted compliance dashboard may be evaluated later, but the submitted repository deliberately has no authentication, paid API, cloud database, or SaaS claim.
+## Tests required before field use
 
-## Validation gates before field use
+- Calibration with labelled textile-effluent samples
+- False-positive and false-negative analysis
+- Electrical isolation and protected actuator drivers
+- Watchdog, emergency stop, and power-loss tests
+- Normally safe valve and tank-level interlocks
+- Site-specific TNPCB/CPCB review
+- Independent testing of any dosing process
 
-- Traceable calibration against real textile-effluent samples.
-- False-positive and false-negative analysis across operating conditions.
-- Electrical isolation, enclosure, relay-driver, flyback, watchdog, and emergency-stop review.
-- Normally-safe valve selection, power-loss testing, tank-level interlocks, and hydraulic validation.
-- Applicable TNPCB/CPCB limits and disposal/reuse requirements confirmed for the specific site.
-- Independent treatment-performance testing for any dosing stage.
+## Current limit
 
-## Honest status
-
-The digital twin and tests are working. The Wokwi build uses proxy inputs. Physical sensing, valve actuation, treatment performance, regulator acceptance, tamper resistance, and ML classification remain unvalidated.
+The digital twin and automated tests run now. Wokwi uses proxy inputs. The project has not yet measured real effluent or actuated a physical valve.
