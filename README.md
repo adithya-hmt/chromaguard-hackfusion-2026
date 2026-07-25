@@ -1,5 +1,13 @@
 # ChromaGuard – Effluent Compliance System
 
+![HackFusion 2026](https://img.shields.io/badge/HackFusion-2026-9a3445?style=flat-square) ![Status](https://img.shields.io/badge/status-prototype-f0c36a?style=flat-square) ![License](https://img.shields.io/badge/license-MIT-67d69c?style=flat-square)
+
+> **We don't just catch pollution — we stop it at the pipe.**
+
+### The 90-second hackathon pitch
+
+Textile effluent is often tested after it has already left the pipe. ChromaGuard closes that detection-to-action gap with a low-cost ESP32 prototype: it senses water quality, explains the rule that fired, and automatically diverts non-compliant flow into a holding tank. The browser twin makes the complete physical workflow judgeable offline, without a cloud account or paid API.
+
 ChromaGuard is an ESP32-oriented prototype for textile dye effluent. It continuously senses pH, TDS, turbidity, colour intensity, and flow; applies a documented rule classifier; decides the outlet route; drives a diversion valve on non-compliance; and records an auditable event log.
 
 > **Prototype notice:** the browser uses simulated sensor data and this project is not a replacement for an effluent treatment plant, regulatory approval, or certified instrumentation. Thresholds are prototype defaults. Final limits require applicable TNPCB/CPCB review, field samples, calibration, and safety validation.
@@ -7,6 +15,14 @@ ChromaGuard is an ESP32-oriented prototype for textile dye effluent. It continuo
 ## Why detection alone is insufficient
 
 A dashboard that only reports a violation leaves the discharge path open. ChromaGuard makes the control action explicit: in automatic mode, `NON_COMPLIANT` or `SENSOR_FAULT` enters the fail-safe route and commands diversion before the normal outlet. A full holding tank closes the valve and raises a visible fault instead of pretending the tank can accept more flow.
+
+## Hardware concept
+
+The supplied Tinkercad-style circuit reference shows the intended prototype: fused 12 V supply, buck conversion for the ESP32, pH/TDS/turbidity probes, TCS3200 colour sensing, optional flow sensing, I2C LCD, maintenance override, solenoid diversion valve, optional dosing pump, buzzer, and green/yellow/red status outputs.
+
+![ChromaGuard ESP32 prototype circuit](docs/circuit-diagram.png)
+
+The image is a system reference, not a production wiring approval. The Wokwi pin map and current firmware configuration are authoritative for the simulation; validate power domains, isolation, relay drivers, flyback protection, grounding, and emergency shutdown before connecting a live valve.
 
 ## Sense → Classify → Decide → Act → Log
 
@@ -39,6 +55,24 @@ The simulation is offline after the app loads. State and events are stored in th
 ## Demo scenarios
 
 Use the scenario console to reproduce normal, high TDS, acidic/alkaline pH, high turbidity, abnormal colour, severe mixed contamination, sensor disconnect, maintenance bypass, and holding-tank-full states. The event log supports search, filtering, CSV export, and confirmed clearing.
+
+## Judge-ready demo path
+
+1. Open the [live digital twin](https://adithya-hmt.github.io/chromaguard-hackfusion-2026/) and point out that it works without authentication or a backend.
+2. Run **Normal compliant discharge** and show the green normal outlet route.
+3. Run **High TDS violation** and show the red diversion route, triggered rule, tank level, and audit event.
+4. Run **Sensor disconnected** to demonstrate fail-safe diversion instead of silent bad data.
+5. Enable **Maintenance bypass** and show that the override is visible and logged.
+6. Restore normal readings twice; the state machine releases diversion only after consecutive compliant samples.
+7. Export the event log CSV, then open the Wokwi firmware simulation to show matching serial telemetry.
+
+### What makes this a hackathon prototype
+
+- **Problem clarity:** turns a delayed lab result into an on-pipe intervention.
+- **Working loop:** Sense → Classify → Decide → Act → Log, not a passive dashboard.
+- **Reproducibility:** deterministic scenarios and automated classifier tests.
+- **Responsible scope:** no invented ML model, certification, or regulator approval claim.
+- **Scale path:** rule thresholds first; labelled field samples before any ML upgrade.
 
 ## Repository map
 
