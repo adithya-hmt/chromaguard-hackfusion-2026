@@ -25,7 +25,7 @@ flowchart LR
 
 ## Live demo
 
-After publishing with the Pages workflow, the demo is available at `https://USERNAME.github.io/chromaguard-hackfusion-2026/`.
+The public repository is [adithya-hmt/chromaguard-hackfusion-2026](https://github.com/adithya-hmt/chromaguard-hackfusion-2026). After the Pages workflow completes, the simulation is available at [adithya-hmt.github.io/chromaguard-hackfusion-2026](https://adithya-hmt.github.io/chromaguard-hackfusion-2026/).
 
 ## Run locally
 
@@ -65,6 +65,15 @@ Push the repository to GitHub with the name `chromaguard-hackfusion-2026`. Enabl
 
 Current limitations include simulated browser readings, proxy inputs in Wokwi, no plant PLC interlock, no certified sensor calibration, and no persistent server database. Next steps are field sampling, calibration curves, tank-level hardware interlocks, treatment validation, and only then evaluation of a labelled-data ML model.
 
-## Team and licence
+## Team
 
-Built for HackFusion 2026 by the ChromaGuard team. See [`LICENSE`](LICENSE), [`CONTRIBUTING.md`](CONTRIBUTING.md), and [`SECURITY.md`](SECURITY.md).
+**Team ChromaGuard · HackFusion 2026**
+
+- **Adithya HMT** — repository maintainer, product direction, dashboard and simulation integration ([`@adithya-hmt`](https://github.com/adithya-hmt)).
+- **ChromaGuard engineering team** — embedded sensing, process controls, calibration, and field validation.
+
+The public prototype intentionally records roles rather than inventing personal details for collaborators who have not published their profiles. See [`docs/team.md`](docs/team.md) for the demo handoff and ownership map.
+
+## Licence
+
+See [`LICENSE`](LICENSE), [`CONTRIBUTING.md`](CONTRIBUTING.md), and [`SECURITY.md`](SECURITY.md).
