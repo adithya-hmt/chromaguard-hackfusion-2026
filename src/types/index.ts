@@ -1,0 +1,9 @@
+export type Classification = 'COMPLIANT' | 'WARNING' | 'NON_COMPLIANT' | 'SENSOR_FAULT'
+export type SystemMode = 'AUTOMATIC' | 'MANUAL'
+export type SystemState = Classification | 'DIVERTING' | 'MAINTENANCE'
+export type SensorKey = 'ph' | 'tds' | 'turbidity' | 'colourIntensity' | 'flowRate'
+export type Sensors = Record<SensorKey, number | null>
+export type Rule = { id: string; label: string; severity: 'warning' | 'critical' | 'fault' }
+export type ClassificationResult = { classification: Classification; score: number; confidence: 'high' | 'medium' | 'low'; rules: Rule[] }
+export type Sample = Sensors & { time: number; score: number; classification: Classification; divertedVolume: number }
+export type Event = { id: string; timestamp: string; values: Sensors; classification: Classification; rules: string[]; valve: 'NORMAL' | 'DIVERTING' | 'CLOSED'; pump: boolean; mode: SystemMode; fault?: string }

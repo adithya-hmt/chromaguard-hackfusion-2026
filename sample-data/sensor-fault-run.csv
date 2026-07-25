@@ -1,0 +1,2 @@
+timestamp,ph,tds,turbidity,colourIntensity,flowRate,classification
+2026-07-25T09:02:00Z,,800,10,24,12,SENSOR_FAULT

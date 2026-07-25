@@ -1,0 +1,3 @@
+version = 1
+firmware = '../../firmware/chromaguard/build/chromaguard.ino.bin'
+elf = '../../firmware/chromaguard/build/chromaguard.ino.elf'
