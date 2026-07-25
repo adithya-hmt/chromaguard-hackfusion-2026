@@ -104,8 +104,6 @@ Browser state and event history are stored in `localStorage`.
 - **Prizes:** ₹10,000, ₹7,500, and ₹5,000
 - **Registration:** [form.startuptn.in/HACF](https://form.startuptn.in/HACF)
 
-![Hack Fusion 2026 poster](docs/hackfusion-2026-poster.png)
-
 ## Team Technoz
 
 - Manieswari M. V., Team Leader, EEE
