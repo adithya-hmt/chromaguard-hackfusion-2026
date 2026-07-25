@@ -24,13 +24,19 @@ The supplied Tinkercad-style circuit reference shows the intended prototype: fus
 
 The image is a system reference, not a production wiring approval. The Wokwi pin map and current firmware configuration are authoritative for the simulation; validate power domains, isolation, relay drivers, flyback protection, grounding, and emergency shutdown before connecting a live valve.
 
+## HackFusion submission assets
+
+- [HackFusion presentation PDF](docs/Chromaguard-HACKFUSION.pdf)
+- [HackFusion 2026 presentation template](docs/ChromaGuard_HackFusion_2026_Template.pptx)
+- [Circuit diagram image](docs/circuit-diagram.png)
+
 ## Sense → Classify → Decide → Act → Log
 
 ```mermaid
 flowchart LR
   A[Dyeing unit] --> B[Sensor pod]
   B --> C[Rule fusion classifier]
-  C --> D{Decision]
+  C --> D{Decision}
   D -->|COMPLIANT| E[Normal discharge]
   D -->|WARNING| F[Alert + continue monitoring]
   D -->|NON_COMPLIANT / SENSOR_FAULT| G[Solenoid diversion]
