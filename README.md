@@ -6,9 +6,9 @@
 
 > We don't just detect pollution. We stop it at the pipe.
 
-[Live simulation](https://adithya-hmt.github.io/chromaguard-hackfusion-2026/) · [Judge demo](docs/demo-script.md) · [ESP32/Wokwi setup](simulation/wokwi/README.md) · [Technical brief](docs/hackathon-brief.md)
+[Launch interactive demo](https://adithya-hmt.github.io/chromaguard-hackfusion-2026/) · [Judge demo](docs/demo-script.md) · [ESP32/Wokwi setup](simulation/wokwi/README.md) · [Technical brief](docs/hackathon-brief.md)
 
-Textile effluent is often verified after it has already left the discharge pipe. ChromaGuard demonstrates a direct response: sense water quality, classify it with visible rules, decide the route, actuate diversion, and record the event. The browser twin lets judges reproduce that complete loop without an account, backend, paid API, or physical sensor kit.
+Textile effluent is often verified after it has already left the discharge pipe. ChromaGuard demonstrates a direct response: sense water quality, classify it with visible rules, decide the route, actuate diversion, and record the event. Its **interactive browser demo** lets judges run scenarios, operate controls, watch valve routing, inspect charts, and export events without an account, backend, paid API, or physical sensor kit.
 
 ChromaGuard is an ESP32-oriented prototype for textile dye effluent. It continuously senses pH, TDS, turbidity, colour intensity, and flow; applies a documented rule classifier; decides the outlet route; drives a diversion valve on non-compliance; and records an auditable event log.
 
@@ -56,9 +56,9 @@ flowchart LR
   C --> J[(Local event log)]
 ```
 
-## Live demo
+## Interactive demo
 
-The public repository is [adithya-hmt/chromaguard-hackfusion-2026](https://github.com/adithya-hmt/chromaguard-hackfusion-2026). After the Pages workflow completes, the simulation is available at [adithya-hmt.github.io/chromaguard-hackfusion-2026](https://adithya-hmt.github.io/chromaguard-hackfusion-2026/).
+The public repository is [adithya-hmt/chromaguard-hackfusion-2026](https://github.com/adithya-hmt/chromaguard-hackfusion-2026). The working interactive demo is available at [adithya-hmt.github.io/chromaguard-hackfusion-2026](https://adithya-hmt.github.io/chromaguard-hackfusion-2026/).
 
 ## Run locally
 
